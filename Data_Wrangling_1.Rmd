@@ -1,0 +1,31 @@
+---
+title: '9.23'
+output: html_document
+date: "2025-09-23"
+---
+
+```{r}
+library(tidyverse)
+
+options(tibble.print_min = 5)
+```
+
+```{r}
+pulse_df = 
+  haven::read_sas("data/public_pulse_data.sas7bdat") |>
+  janitor::clean_names()
+
+pulse_df
+```
+
+```{r}
+pulse_tidy_df = 
+  pivot_longer(
+    pulse_df, 
+    bdi_score_bl:bdi_score_12m,
+    names_to = "visit", 
+    names_prefix = "bdi_score_",
+    values_to = "bdi")
+
+pulse_tidy_df
+```
